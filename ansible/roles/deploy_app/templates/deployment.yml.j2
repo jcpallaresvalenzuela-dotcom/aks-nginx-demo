@@ -18,3 +18,5 @@ spec:
           image: {{ image }}
           ports:
             - containerPort: 80
+      imagePullSecrets:
+        - name: acr-secret
