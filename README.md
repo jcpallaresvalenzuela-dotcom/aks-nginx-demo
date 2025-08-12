@@ -26,19 +26,20 @@ Despliegue de una aplicación Nginx en un **cluster AKS**, usando **Ansible** y 
 
 ## 📂 Estructura del repositorio
 
-aks-nginx-demo/
-│── ansible/
-│ ├── inventory.ini
-│ ├── playbook.yml
-│ └── roles/deploy_app/
-│ ├── tasks/main.yml
-│ ├── templates/deployment.yml.j2
-│ └── templates/service.yml.j2
-│── app/
-│ ├── Dockerfile
-│ └── index.html
-│── .github/workflows/deploy.yml
-│── README.md
+
+`aks-nginx-demo/`
+`│── ansible/`
+`│ ├── inventory.ini`
+`│ ├── playbook.yml`
+`│ └── roles/deploy_app/`
+`│ ├── tasks/main.yml`
+`│ ├── templates/deployment.yml.j2`
+`│ └── templates/service.yml.j2`
+`│── app/`
+`│ ├── Dockerfile`
+`│ └── index.html`
+`│── .github/workflows/deploy.yml`
+`│── README.md`
 
 ## 🚀 Cómo usarlo
 
@@ -49,19 +50,18 @@ Configurar el acceso desde GitHub Actions:
 
 Crear un Service Principal en Azure:
 
-az ad sp create-for-rbac --name "github-aks" --sdk-auth
-Guardar el JSON de salida como secreto en GitHub:
-Settings → Secrets → Actions → AZURE_CREDENTIALS
+`az ad sp create-for-rbac --name "github-aks" --sdk-auth`
 
 2️⃣ Variables de entorno
-Editar en .github/workflows/deploy.yml:
 
+```sh
 ACR_NAME: tuacr.azurecr.io
 RESOURCE_GROUP: tu-rg
 AKS_NAME: tu-aks
+```
 
 3️⃣ Ejecutar pipeline
-Hacer commit y push a main.
+Hacer commit y push a master en path app o ansible.
 
 GitHub Actions ejecutará:
 
@@ -69,7 +69,8 @@ CI: Build & Push imagen.
 
 CD: Despliegue automático en AKS con Ansible.
 
-✅ Resultado
-Al final, podrás acceder a la aplicación en la IP pública del LoadBalancer:
 
+Acceso al nginx via
+```sh
 kubectl get svc nginx-demo-service
+```
