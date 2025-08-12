@@ -1,0 +1,49 @@
+name: CI/CD to AKS
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  ACR_NAME: jcpallares.azurecr.io
+  IMAGE_NAME: nginx-demo
+  RESOURCE_GROUP: aks-test
+  AKS_NAME: aks-mlops-demo
+  K8S_NAMESPACE: default
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure CLI - Login ACR
+        run: |
+          az acr login --name ${{ env.ACR_NAME }}
+
+      - name: Build & Push Docker image
+        run: |
+          docker build -t ${{ env.ACR_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }} ./app
+          docker push ${{ env.ACR_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Get AKS credentials
+        run: |
+          az aks get-credentials --resource-group ${{ env.RESOURCE_GROUP }} --name ${{ env.AKS_NAME }} --overwrite-existing
+
+      - name: Install Ansible & k8s collection
+        run: |
+          pip install ansible kubernetes ansible-core
+          ansible-galaxy collection install kubernetes.core
+
+      - name: Deploy to AKS with Ansible
+        run: |
+          ansible-playbook ansible/playbook.yml -i ansible/inventory.ini \
+            -e "image=${{ env.ACR_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
