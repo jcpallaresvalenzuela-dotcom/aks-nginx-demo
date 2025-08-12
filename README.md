@@ -80,7 +80,7 @@ kubectl create secret -n project1 docker-registry acr-secret \
   --docker-password=<ACR-PASSWORD>
 ```
 
-5. Ejecutar pipeline haciendo alguna modificacion menor sobre algun file dentro de /app o /ansible
+5. Ejecutar pipeline haciendo alguna modificacion menor sobre algun file dentro de /app o /ansible o de manera manual sobre Actions
 
 >El workflow de GithubAction está configurado para que se ejecute automaticamente cuando se realiza un commit dentro de algun archivo de las carpetas `app` o `ansible`.
 
