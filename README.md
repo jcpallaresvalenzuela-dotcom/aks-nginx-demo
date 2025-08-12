@@ -28,18 +28,21 @@ Despliegue de una aplicación Nginx en un **cluster AKS**, usando **Ansible** y 
 
 ```sh
 aks-nginx-demo/
-│── ansible/
-│ ├── inventory.ini
-│ ├── playbook.yml
-│ └── roles/deploy_app/
-│ ├── tasks/main.yml
-│ ├── templates/deployment.yml.j2
-│ └── templates/service.yml.j2
-│── app/
-│ ├── Dockerfile
-  └── index.html
-│── .github/workflows/deploy.yml
-│── README.md
+└── aks-nginx-demo
+    ├── README.md
+    ├── ansible
+    │   ├── inventory.ini
+    │   ├── playbook.yml
+    │   └── roles
+    │       └── deploy_app
+    │           ├── tasks
+    │           │   └── main.yml
+    │           └── templates
+    │               ├── deployment.yml.j2
+    │               └── service.yml.j2
+    └── app
+        ├── Dockerfile
+        └── index.html
 ```
 ## 🚀 Cómo usarlo
 
