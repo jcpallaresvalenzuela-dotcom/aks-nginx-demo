@@ -10,10 +10,11 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-  RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
-  AKS_NAME: ${{ secrets.AKS_NAME }}
-  K8S_NAMESPACE: ${{ secrets.K8S_NAMESPACE }}
+  ACR_NAME: ${{ vars.ACR_NAME }}
+  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP }}
+  AKS_NAME: ${{ vars.AKS_NAME }}
+  K8S_NAMESPACE: ${{ vars.K8S_NAMESPACE }}
 
 jobs:
   build-and-deploy:
