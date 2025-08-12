@@ -1,0 +1,9 @@
+- name: Aplicar Deployment
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'deployment.yml.j2') }}"
+
+- name: Aplicar Service
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'service.yml.j2') }}"
