@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
 
 env:
-  ACR_NAME: ${{ secrets.ACR_NAME }}
   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
   RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
   AKS_NAME: ${{ secrets.AKS_NAME }}
@@ -32,6 +31,7 @@ jobs:
 
       - name: Azure CLI - Login ACR
         run: |
+          echo $ACR_NAME
           az acr login --name $ACR_NAME
 
       - name: Build & Push Docker image
