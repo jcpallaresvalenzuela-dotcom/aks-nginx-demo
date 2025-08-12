@@ -26,21 +26,21 @@ Despliegue de una aplicación Nginx en un **cluster AKS**, usando **Ansible** y 
 
 ## 📂 Estructura del repositorio
 
-
-`aks-nginx-demo/`
-`│── ansible/`
-`│ ├── inventory.ini`
-`│ ├── playbook.yml`
-`│ └── roles/deploy_app/`
-`│ ├── tasks/main.yml`
-`│ ├── templates/deployment.yml.j2`
-`│ └── templates/service.yml.j2`
-`│── app/`
-`│ ├── Dockerfile`
-`│ └── index.html`
-`│── .github/workflows/deploy.yml`
-`│── README.md`
-
+```sh
+aks-nginx-demo/
+│── ansible/
+│ ├── inventory.ini
+│ ├── playbook.yml
+│ └── roles/deploy_app/
+│ ├── tasks/main.yml
+│ ├── templates/deployment.yml.j2
+│ └── templates/service.yml.j2
+│── app/
+│ ├── Dockerfile
+  └── index.html
+│── .github/workflows/deploy.yml
+│── README.md
+```
 ## 🚀 Cómo usarlo
 
 1️⃣ Requisitos previos
