@@ -47,15 +47,15 @@ aks-nginx-demo/
 ## 🚀 Cómo usarlo
 
 1️⃣ Requisitos previos
-Tener un AKS y un ACR configurados.
+* Tener un AKS y un ACR configurados.
 
-Configurar el acceso desde GitHub Actions:
+* Configurar GitHub Actions con `aks-nginx-demo\.github\workflows\main.yml`:
 
-Crear un Service Principal en Azure:
+* Crear un Service Principal en Azure:
 
 `az ad sp create-for-rbac --name "github-aks" --sdk-auth`
 
-2️⃣ Variables de entorno
+2️⃣ Configurar tus variables de entorno en `aks-nginx-demo\.github\workflows\main.yml`:
 
 ```sh
 ACR_NAME: tuacr.azurecr.io
@@ -64,16 +64,12 @@ AKS_NAME: tu-aks
 ```
 
 3️⃣ Ejecutar pipeline
-Hacer commit y push a master en path app o ansible.
 
-GitHub Actions ejecutará:
-
-CI: Build & Push imagen.
-
-CD: Despliegue automático en AKS con Ansible.
+El workflow de GithubAction está configurado para que se ejecute automaticamente cuando se realiza un commit dentro de algun archivo de las carpetas `app` o `ansible`.¿
 
 
-Acceso al nginx via
+
+Acceso al nginx via la IP pública de tu LB
 ```sh
 kubectl get svc nginx-demo-service
 ```
