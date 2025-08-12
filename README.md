@@ -82,8 +82,7 @@ kubectl create secret -n project1 docker-registry acr-secret \
 
 5. Ejecutar pipeline haciendo alguna modificacion menor sobre algun file dentro de /app o /ansible
 
-El workflow de GithubAction está configurado para que se ejecute automaticamente cuando se realiza un commit dentro de algun archivo de las carpetas `app` o `ansible`.
-
+>El workflow de GithubAction está configurado para que se ejecute automaticamente cuando se realiza un commit dentro de algun archivo de las carpetas `app` o `ansible`.
 
 
 Acceso al nginx via la IP pública de tu LB
