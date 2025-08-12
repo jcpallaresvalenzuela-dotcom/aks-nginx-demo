@@ -46,26 +46,43 @@ aks-nginx-demo/
 ```
 ## 🚀 Cómo usarlo
 
-1️⃣ Requisitos previos
-* Tener un AKS y un ACR configurados.
+1️. Requisitos previos
+* Tener un AKS y un ACR desplegados.
 
 * Configurar GitHub Actions con `aks-nginx-demo\.github\workflows\main.yml`:
 
-* Crear un Service Principal en Azure:
+* Crear un Service Principal en Azure y guardar el JSON de salida como secreto en GitHub.
 
-`az ad sp create-for-rbac --name "github-aks" --sdk-auth`
+   `az ad sp create-for-rbac --name "github-aks" --sdk-auth > secret.json`
 
-2️⃣ Configurar tus variables de entorno en `aks-nginx-demo\.github\workflows\main.yml`:
+   * Crea un **Environment** en Settings -> Actions secrets and variables y nombralo `AZURE_CREDENTIALS`
+
+   * Crea un **Secret** dentro del environment y nombralo tambien `AZURE_CREDENTIALS`
+
+
+2. Configura tus variables de entorno en `aks-nginx-demo\.github\workflows\main.yml`:
 
 ```sh
-ACR_NAME: tuacr.azurecr.io
-RESOURCE_GROUP: tu-rg
-AKS_NAME: tu-aks
+ACR_NAME: <ACR-NAME>.azurecr.io
+RESOURCE_GROUP: <RG-NAME>
+AKS_NAME: <AKS-NAME>
 ```
 
-3️⃣ Ejecutar pipeline
+3. Crea un namespace llamado `project1`. Es donde se desplegará nginx
 
-El workflow de GithubAction está configurado para que se ejecute automaticamente cuando se realiza un commit dentro de algun archivo de las carpetas `app` o `ansible`.¿
+4. El deployment del nginx tiene añadido un secreto `acr-secret` que debe contener las credenciales de tu ACR, por lo que hay que crearlo previamente en tu AKS
+
+```sh
+#Crear secret
+kubectl create secret -n project1 docker-registry acr-secret \                                                                                                                                                                      
+  --docker-server=<ACR-NAME>.azurecr.io \
+  --docker-username=<ACR-USER> \
+  --docker-password=<ACR-PASSWORD>
+```
+
+5. Ejecutar pipeline haciendo alguna modificacion menor sobre algun file dentro de /app o /ansible
+
+El workflow de GithubAction está configurado para que se ejecute automaticamente cuando se realiza un commit dentro de algun archivo de las carpetas `app` o `ansible`.
 
 
 
