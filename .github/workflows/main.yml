@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'ansible/**'
+      - 'app/**'
 
 env:
   ACR_NAME: jcpallares.azurecr.io
