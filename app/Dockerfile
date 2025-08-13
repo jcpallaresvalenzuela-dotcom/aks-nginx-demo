@@ -18,5 +18,4 @@ COPY app.py requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Comando para levantar Nginx + API Python
-CMD nginx -g "daemon off;" &
-    uvicorn app:app --host 0.0.0.0 --port 8000
+CMD nginx -g "daemon off;" & uvicorn app:app --host 0.0.0.0 --port 8000
