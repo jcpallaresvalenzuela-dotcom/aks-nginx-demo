@@ -26,7 +26,8 @@ fi
 # Configuración de básica de nginx 
 cat <<EOF > /etc/nginx/conf.d/default.conf
 server {
-    listen 80;
+    listen 80 default_server;
+    listen [::]:80 default_server;
     server_name _;
     
     # Sirve archivos estáticos
@@ -46,3 +47,6 @@ server {
     error_log /var/log/nginx/error.log;
 }
 EOF
+
+# Elimina el default server para evitar conflicto
+rm /etc/nginx/sites-enabled/default
