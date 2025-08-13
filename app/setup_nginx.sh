@@ -14,6 +14,15 @@ cat <<EOF > /usr/share/nginx/html/index.html
 </html>
 EOF
 
+# --- Asegurar que nginx.conf incluya los conf.d ---
+NGINX_CONF="/etc/nginx/nginx.conf"
+
+# Solo agregar include si no existe ya
+if ! grep -q "include /etc/nginx/conf.d/\*\.conf;" "$NGINX_CONF"; then
+    # Insertar dentro del bloque http
+    sed -i '/http {/a \    include /etc/nginx/conf.d/*.conf;' "$NGINX_CONF"
+fi
+
 # Configuración de básica de nginx 
 cat <<EOF > /etc/nginx/conf.d/default.conf
 server {
@@ -27,7 +36,7 @@ server {
     }
 
     # Redirige /info hacia el servicio Python en el puerto 8000
-    location /info {
+    location /info/ {
         proxy_pass http://127.0.0.1:8000/info;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
