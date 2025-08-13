@@ -1,6 +1,6 @@
 # 🚀 AKS DevOps Demo – Ansible + GitHub Actions CI/CD
 
-Despliegue de una aplicación Nginx en un **cluster AKS**, usando **Ansible** y **GitHub Actions**.
+Despliegue de una aplicación Nginx en un **cluster AKS**, usando **Ansible** y **GitHub Actions**, junto con una aplicación **Python** ejecutándose con **Uvicorn**.
 
 ---
 
@@ -10,6 +10,8 @@ Despliegue de una aplicación Nginx en un **cluster AKS**, usando **Ansible** y 
 - **Docker**
 - **Ansible**
 - **GitHub Actions**
+- **Python + Uvicorn (app backend)**
+- **Nginx (reverse proxy y server de archivos estáticos)**
 
 ---
 
@@ -42,7 +44,10 @@ aks-nginx-demo/
     │               └── service.yml.j2
     └── app
         ├── Dockerfile
-        └── index.html
+        ├── index.html
+        ├── app.py
+        ├── requirements.txt
+        └── setup_nginx.sh
 ```
 ## 🚀 Cómo usarlo
 
@@ -85,7 +90,11 @@ kubectl create secret -n project1 docker-registry acr-secret \
 >El workflow de GithubAction está configurado para que se ejecute automaticamente cuando se realiza un commit dentro de algun archivo de las carpetas `app` o `ansible`.
 
 
-Acceso al nginx via la IP pública de tu LB
+## 🌐 Acceso a la app
+Acceso a Nginx vía la IP pública del LoadBalancer:
+
 ```sh
 kubectl get svc nginx-demo-service
 ```
+>Nginx sirve index.html en /.
+>App Python disponible en /info/ vía proxy inverso desde Nginx.
